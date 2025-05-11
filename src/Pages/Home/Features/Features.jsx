@@ -2,13 +2,14 @@ import React from 'react';
 import i1 from "../../../assets/icons/1.jpg"
 import i2 from "../../../assets/icons/2.jpg"
 import i3 from "../../../assets/icons/a-checkmark-inside-a-parcel-box-with-a-delivery-si.png"
+import { Fade } from 'react-awesome-reveal';
 
 const Features = () => {
     return (
         <div className='flex justify-center '>
             <div>
                 <h2 className="text-center text-3xl my-20">Our Features Yours  <span className='font-bold text-green-500'> Safety</span></h2>
-            
+            <Fade>
             <div className='grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-20'>
                 <div className="card bg-primary text-primary-content w-96">
                     <div className="card-body">
@@ -37,6 +38,7 @@ const Features = () => {
                     </div>
                 </div>
             </div>
+            </Fade>
             </div>
 
         </div>
