@@ -1,5 +1,28 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100..900&display=swap');
+
+
 @import "tailwindcss/base";
 
 @import "tailwindcss/components";
 
 @import "tailwindcss/utilities";
+
+
+
+.logo-font {
+  font-family: "Rubik Mono One", monospace;
+}
+
+.font-main{
+  font-family: "Encode Sans", sans-serif;
+}
+
+.banner-img{
+  background-image: url('/src/assets/banner.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: inset 0 0 0 2000px rgba(0,0,0,0.5);
+  /* height: 600px; */
+}
+
