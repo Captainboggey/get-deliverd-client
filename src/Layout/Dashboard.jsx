@@ -6,7 +6,7 @@ const Dashboard = () => {
     const navDash = <>
         <Link to={'/'}><li ><h2 className='text-center '>Home</h2></li></Link>
         <Link to={'/dashboard/bookParcel'}><li ><h2 className='text-center '>Book a Parcel</h2></li></Link>
-        <Link to={'/'}><li ><h2 className='text-center '>My Parcels</h2></li></Link>
+        <Link to={'/dashboard/myParcels'}><li ><h2 className='text-center '>My Parcels</h2></li></Link>
         <Link to={'/'}><li ><h2 className='text-center '>My Profile</h2></li></Link>
     </>
     return (

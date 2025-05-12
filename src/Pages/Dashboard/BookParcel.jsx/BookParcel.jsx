@@ -2,24 +2,26 @@ import React, { useState } from 'react';
 import useAuth from '../../../Hooks/useAuth';
 import { useForm } from "react-hook-form";
 import { Helmet } from 'react-helmet-async';
+import useAxiosPublic from '../../../Hooks/useAxiosPublic';
+import Swal from 'sweetalert2';
 const BookParcel = () => {
     const [calculatePrice, setCalculatePrice] = useState(0)
     const { user } = useAuth();
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
-    
+    const axiosPublic = useAxiosPublic()
     const handlePrice = (e) => {
         e.preventDefault();
         const form = e.target;
         const price = form.weight.value;
         const sum = price * 50;
         setCalculatePrice(sum)
-        if(price === 0){
+        if (price === 0) {
             setCalculatePrice(0)
         }
     }
     const onSubmit = data => {
-        if(calculatePrice=>0){
-           const parcelInfo={
+
+        const parcelInfo = {
             senderName: data.senderName,
             senderEmail: data.senderEmail,
             senderPhone: data.senderPhone,
@@ -32,9 +34,30 @@ const BookParcel = () => {
             price: calculatePrice,
             status: "pending",
             bookingDate: new Date()
-           }
-           console.log(parcelInfo)
         }
+        //    console.log(parcelInfo)
+        axiosPublic.post('/parcels', parcelInfo)
+            .then(res => {
+                if (res.data.insertedId) {
+                    const Toast = Swal.mixin({
+
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        }
+                    });
+                    Toast.fire({
+                        icon: "success",
+                        title: "Parcel Booked successfully"
+                    });
+                }
+            })
+
 
     }
     return (
@@ -51,7 +74,7 @@ const BookParcel = () => {
                                 <label className="label w-full">
                                     <span className="label-text">Name</span>
                                 </label>
-                                <input {...register("senderName")}  type="text" disabled defaultValue={user.displayName} className="input w-full input-bordered" required />
+                                <input {...register("senderName")} type="text" disabled defaultValue={user.displayName} className="input w-full input-bordered" required />
                             </div>
                             <div className="form-control ">
                                 <label className="label w-full">
@@ -71,7 +94,7 @@ const BookParcel = () => {
                                 </label>
                                 <input {...register("parcelType")} type="text" placeholder='Parcel Type' className="input w-full input-bordered" required />
                             </div>
-                           
+
                             <div className="form-control ">
                                 <label className="label w-full">
                                     <span className="label-text">Receiver's Name</span>
@@ -102,14 +125,14 @@ const BookParcel = () => {
                                 </label>
                                 <input type="text" {...register("deliveryLongitude")} placeholder='Longitude' className="input w-full input-bordered" required />
                             </div>
-                          
+
                         </div>
 
                         <div className="form-control mt-6">
-                            <input disabled={calculatePrice<=0} type="submit" className='btn btn-secondary' value="Submit" />
-                           
+                            <input disabled={calculatePrice <= 0} type="submit" className='btn btn-secondary' value="Submit" />
+
                             {
-                                calculatePrice <= 0?<p className='mt-2'>Calculate Price First<span className='text-red-600'>*</span></p>:''
+                                calculatePrice <= 0 ? <p className='mt-2'>Calculate Price First<span className='text-red-600'>*</span></p> : ''
                             }
                         </div>
                     </form>
@@ -119,7 +142,7 @@ const BookParcel = () => {
                                 <span className="label-text">Parcel Weight</span>
                             </label>
                             <input type="number" min={0} name='weight' placeholder='KG' className="input  input-bordered" required />
-                             <p  className="text-2xl">Price: {calculatePrice} Taka</p>
+                            <p className="text-2xl">Price: {calculatePrice} Taka</p>
                             <button className="btn btn-sm btn-primary">Calculate</button>
                         </form>
                     </div>

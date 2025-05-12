@@ -6,6 +6,7 @@ import SignUp from "../Pages/SignUp/SignUp";
 import Dashboard from "../Layout/Dashboard";
 import PrivateRoute from "./PrivateRoute";
 import BookParcel from "../Pages/Dashboard/BookParcel.jsx/BookParcel";
+import MyParcels from "../Pages/Dashboard/BookParcel.jsx/MyParcels/MyParcels";
 
 const router =createBrowserRouter([{
     path:'/',
@@ -26,6 +27,9 @@ const router =createBrowserRouter([{
     children:[{
         path: '/dashboard/bookParcel',
         element:<BookParcel></BookParcel>
+    },{
+        path:'/dashboard/myParcels',
+        element:<MyParcels></MyParcels>
     }]
 }])
 
