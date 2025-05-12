@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import GoogleLogin from '../../Components/googleLogin';
 import { Helmet } from 'react-helmet-async';
 import { useForm } from "react-hook-form";
@@ -11,6 +11,9 @@ const Login = () => {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const [error,setError]=useState('')
     const navigate = useNavigate()
+    const location = useLocation();
+    console.log(location)
+    const goTo =location?.state?.from?.pathname || '/'
     const onSubmit = data => {
         signIn(data.email, data.password)
             .then(res => {
@@ -31,7 +34,7 @@ const Login = () => {
                         icon: "success",
                         title: "Signed in successfully"
                     });
-                    navigate('/')
+                    navigate(goTo)
                 }
             })
             .catch(error=>{
