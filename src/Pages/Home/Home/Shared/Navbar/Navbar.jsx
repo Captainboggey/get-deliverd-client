@@ -21,7 +21,7 @@ const Navbar = () => {
                         <div className="mask mask-squircle h-8 w-8">
                             <img
                                 src={user.photoURL}
-                                alt="DP" />
+                                alt="DP"/>
                         </div>
                     </h2> </div>
                     <ul tabIndex={0} className="dropdown-content text-black menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">

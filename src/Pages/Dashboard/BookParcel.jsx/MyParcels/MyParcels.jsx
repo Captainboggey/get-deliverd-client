@@ -7,15 +7,17 @@ import { useForm } from "react-hook-form";
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../../../../Hooks/useAxiosSecure';
 
 const MyParcels = () => {
     const { user } = useAuth()
-    const axiosPublic = useAxiosPublic()
+    const axiosSecure = useAxiosSecure()
+    const axiosPublic =useAxiosPublic()
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
-    const { data: parcels = [] } = useQuery({
+    const { data: parcels = [],refetch } = useQuery({
         queryKey: ['parcels', user?.email],
         queryFn: async () => {
-            const result = await axiosPublic.get(`/parcels/${user?.email}`)
+            const result = await axiosSecure.get(`/parcels/${user?.email}`)
             return result.data
         }
     })
@@ -52,6 +54,34 @@ const MyParcels = () => {
                 }
             })
     }
+    const handleDelete = (id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Cancel it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosPublic.delete(`/parcels/${id}`)
+                .then(res=>{
+                    if(res.data.deletedCount>0){
+                        refetch()
+                         Swal.fire({
+                    title: "Canceled!",
+                    text: "Your Parcel Has Been Canceled",
+                    icon: "success"
+                });
+                    }
+                })
+               
+            }
+        });
+        
+
+    }
 
     return (
         <div>
@@ -59,9 +89,9 @@ const MyParcels = () => {
                 <title>Get Delivered || My Parcels</title>
             </Helmet>
             <h2 className='text-center text-3xl font-bold underline mt-5 mb-10'>My Parcels</h2>
-            <div className='grid md:grid-col-3 '>
+            <div className='grid md:grid-cols-4 '>
                 {
-                    parcels.map(parcel => <div className='mx-auto' key={parcel._id}>
+                    parcels.map(parcel =>
                         <div key={parcel._id} className="card bg-base-100 w-96 shadow-xl">
 
                             <div className="card-body">
@@ -135,7 +165,7 @@ const MyParcels = () => {
                                                     </div>
                                                 </form>
                                             </div>
-                                        </span>  </Popup><button className='btn btn-sm btn-secondary'>Cancel</button></h2>
+                                        </span>  </Popup><button onClick={()=>handleDelete(parcel._id)} className='btn btn-sm btn-secondary'>Cancel</button></h2>
                                 </div>
                                 <p>Requested Delivery Date {parcel.deliveryDate}</p>
                                 <p>Booking Date {parcel.bookingDate}</p>
@@ -146,7 +176,7 @@ const MyParcels = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>)
+                    )
                 }
             </div>
         </div>

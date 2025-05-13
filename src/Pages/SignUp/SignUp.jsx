@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { Helmet } from 'react-helmet-async';
 import GoogleLogin from '../../Components/googleLogin';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import axios from 'axios';
@@ -16,6 +16,7 @@ const SignUp = () => {
     const { update, signUp } = useAuth()
     const [error, setError] = useState(' ')
     const axiosPublic = useAxiosPublic()
+    const navigate = useNavigate()
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const onSubmit = async (data) => {
         const imageFile = { image: data.image[0] };
@@ -43,6 +44,7 @@ const SignUp = () => {
                                 axiosPublic.post('/users', userInfo)
                                     .then(res => {
                                         if (res.data.insertedId) {
+                                            
                                             const Toast = Swal.mixin({
 
                                                 toast: true,
@@ -59,6 +61,7 @@ const SignUp = () => {
                                                 icon: "success",
                                                 title: "Signed in successfully"
                                             });
+                                            navigate('/')
                                         }
                                     })
                             })

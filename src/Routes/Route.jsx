@@ -8,6 +8,8 @@ import PrivateRoute from "./PrivateRoute";
 import BookParcel from "../Pages/Dashboard/BookParcel.jsx/BookParcel";
 import MyParcels from "../Pages/Dashboard/BookParcel.jsx/MyParcels/MyParcels";
 import MyProfile from "../Pages/Dashboard/MyProfile/MyProfile";
+import AllParcels from "../Pages/Dashboard/AllParcels/AllParcels";
+import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
 
 const router =createBrowserRouter([{
     path:'/',
@@ -36,6 +38,15 @@ const router =createBrowserRouter([{
     },{
         path: '/dashboard/myProfile',
         element:<MyProfile></MyProfile>
+    },
+    // admin
+    {
+        path: '/dashboard/allParcels',
+        element:<AllParcels></AllParcels>
+
+    },{
+        path: '/dashboard/allUsers',
+        element:<AllUsers></AllUsers>
     }]
 }])
 

@@ -4,16 +4,18 @@ import { useForm } from "react-hook-form";
 import useAxiosPublic from '../../../Hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
 import { useQuery } from '@tanstack/react-query';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 const imgKey = import.meta.env.VITE_image_api
 const uploadUrl = `https://api.imgbb.com/1/upload?key=${imgKey}`
 
 const MyProfile = () => {
     const { user, update } = useAuth()
     const axiosPublic = useAxiosPublic()
+    const axiosSecure =useAxiosSecure()
     const { data: profileUser = [], refetch } = useQuery({
         queryKey: ['profileUser', user?.email],
         queryFn: async () => {
-            const result = await axiosPublic.get(`/users/${user.email}`)
+            const result = await axiosSecure.get(`/users/${user.email}`)
             return result.data
         }
 
