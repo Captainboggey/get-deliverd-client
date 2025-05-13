@@ -7,6 +7,7 @@ import Dashboard from "../Layout/Dashboard";
 import PrivateRoute from "./PrivateRoute";
 import BookParcel from "../Pages/Dashboard/BookParcel.jsx/BookParcel";
 import MyParcels from "../Pages/Dashboard/BookParcel.jsx/MyParcels/MyParcels";
+import MyProfile from "../Pages/Dashboard/MyProfile/MyProfile";
 
 const router =createBrowserRouter([{
     path:'/',
@@ -24,12 +25,17 @@ const router =createBrowserRouter([{
 },{
     path: '/dashboard',
     element:<PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
-    children:[{
+    children:[
+        // users
+    {
         path: '/dashboard/bookParcel',
         element:<BookParcel></BookParcel>
     },{
         path:'/dashboard/myParcels',
         element:<MyParcels></MyParcels>
+    },{
+        path: '/dashboard/myProfile',
+        element:<MyProfile></MyProfile>
     }]
 }])
 
