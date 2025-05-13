@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
+import { Helmet } from 'react-helmet-async';
 
 const AllUsers = () => {
     const axiosSecure = useAxiosSecure()
@@ -66,6 +67,9 @@ const AllUsers = () => {
     }
     return (
         <div>
+            <Helmet>
+                <title>Get Delivered || All Users</title>
+            </Helmet>
             <h2 className='text-center text-3xl font-bold underline mt-5 mb-10'>All Users</h2>
             <div>
                 <div className="overflow-x-auto">

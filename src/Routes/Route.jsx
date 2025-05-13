@@ -10,6 +10,7 @@ import MyParcels from "../Pages/Dashboard/BookParcel.jsx/MyParcels/MyParcels";
 import MyProfile from "../Pages/Dashboard/MyProfile/MyProfile";
 import AllParcels from "../Pages/Dashboard/AllParcels/AllParcels";
 import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
+import AllDeliveryMan from "../Pages/Dashboard/AllDeliveryMan/AllDeliveryMan";
 
 const router =createBrowserRouter([{
     path:'/',
@@ -47,6 +48,9 @@ const router =createBrowserRouter([{
     },{
         path: '/dashboard/allUsers',
         element:<AllUsers></AllUsers>
+    },{
+        path: '/dashboard/allDeliveryMan',
+        element:<AllDeliveryMan></AllDeliveryMan>
     }]
 }])
 

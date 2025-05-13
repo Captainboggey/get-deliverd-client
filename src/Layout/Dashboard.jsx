@@ -2,22 +2,39 @@ import React from 'react';
 import Navbar from '../Pages/Home/Home/Shared/Navbar/Navbar';
 import { Link, Outlet } from 'react-router-dom';
 import useAdmin from '../Hooks/useAdmin';
+import useDelivery from '../Hooks/useDelivery';
 
 const Dashboard = () => {
     const [isAdmin] = useAdmin();
+    const [deliveryAdmin]=useDelivery()
     const navDash = 
     
-   isAdmin? <>
+   isAdmin && <>
         <Link to={'/'}><li ><h2 className='text-center '>Home</h2></li></Link>
         <Link to={'/dashboard/allParcels'}><li ><h2 className='text-center '>All Parcels</h2></li></Link>
-        <Link to={'/dashboard/myParcels'}><li ><h2 className='text-center '>All Delivery Man</h2></li></Link>
+        <Link to={'/dashboard/allDeliveryMan'}><li ><h2 className='text-center '>All Delivery Man</h2></li></Link>
         <Link to={'/dashboard/allUsers'}><li ><h2 className='text-center '>All Users</h2></li></Link>
-    </>:<>
+    </> ||
+   deliveryAdmin &&
+    <>
+        <Link to={'/'}><li ><h2 className='text-center '>Home</h2></li></Link>
+        
+    </>
+   || !isAdmin && !deliveryAdmin &&
+    <>
         <Link to={'/'}><li ><h2 className='text-center '>Home</h2></li></Link>
         <Link to={'/dashboard/bookParcel'}><li ><h2 className='text-center '>Book a Parcel</h2></li></Link>
         <Link to={'/dashboard/myParcels'}><li ><h2 className='text-center '>My Parcels</h2></li></Link>
         <Link to={'/dashboard/myProfile'}><li ><h2 className='text-center '>My Profile</h2></li></Link>
     </>
+//   ||  isAdmin && deliveryAdmin &&
+//     <>
+//         <Link to={'/'}><li ><h2 className='text-center '>Home</h2></li></Link>
+//         <Link to={'/dashboard/allParcels'}><li ><h2 className='text-center '>All Parcels</h2></li></Link>
+//         <Link to={'/dashboard/myParcels'}><li ><h2 className='text-center '>All Delivery Man</h2></li></Link>
+//         <Link to={'/dashboard/allUsers'}><li ><h2 className='text-center '>All Users</h2></li></Link>
+//     </>
+
     return (
         <div className='md:flex'>
             <div className=" md:w-64 bg-base-100 md:min-h-screen bg-green-400 md:text-center shadow-sm">
