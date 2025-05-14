@@ -18,6 +18,8 @@ const Dashboard = () => {
    deliveryAdmin &&
     <>
         <Link to={'/'}><li ><h2 className='text-center '>Home</h2></li></Link>
+        <Link to={'/dashboard/myDelivery'}><li ><h2 className='text-center '>My Delivery List</h2></li></Link>
+        <Link to={'/'}><li ><h2 className='text-center '>My Reviews</h2></li></Link>
         
     </>
    || !isAdmin && !deliveryAdmin &&

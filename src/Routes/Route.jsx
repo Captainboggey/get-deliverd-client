@@ -12,6 +12,8 @@ import AllParcels from "../Pages/Dashboard/AllParcels/AllParcels";
 import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
 import AllDeliveryMan from "../Pages/Dashboard/AllDeliveryMan/AllDeliveryMan";
 
+import MyDelivery from "../Pages/Dashboard/MyDelivery/MyDelivery";
+
 const router =createBrowserRouter([{
     path:'/',
     element:<Main></Main>,
@@ -51,6 +53,12 @@ const router =createBrowserRouter([{
     },{
         path: '/dashboard/allDeliveryMan',
         element:<AllDeliveryMan></AllDeliveryMan>
+    },
+    // delivery Man
+    {
+        path: '/dashboard/myDelivery',
+        element:<MyDelivery></MyDelivery>
+        
     }]
 }])
 

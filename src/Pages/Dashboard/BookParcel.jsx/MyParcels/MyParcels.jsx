@@ -97,7 +97,7 @@ const MyParcels = () => {
                             <div className="card-body">
                                 <div className='flex justify-between'>
                                     <h2 className="card-title">Parcel Type {parcel.parcelType}</h2>
-                                    <h2 className="card-title"> <Popup trigger={<button className="btn btn-sm btn-secondary"> Update </button>} modal >
+                                    <h2 className="card-title"> <Popup trigger={<button disabled={parcel.status!=='pending'} className="btn btn-sm btn-secondary"> Update </button>} modal >
 
                                         <span>
 
@@ -165,11 +165,11 @@ const MyParcels = () => {
                                                     </div>
                                                 </form>
                                             </div>
-                                        </span>  </Popup><button onClick={()=>handleDelete(parcel._id)} className='btn btn-sm btn-secondary'>Cancel</button></h2>
+                                        </span>  </Popup><button disabled={parcel.status !=='pending'} onClick={()=>handleDelete(parcel._id)} className='btn btn-sm btn-secondary'>Cancel</button></h2>
                                 </div>
                                 <p>Requested Delivery Date {parcel.deliveryDate}</p>
                                 <p>Booking Date {parcel.bookingDate}</p>
-                                <p>Delivery Men ID </p>
+                                <p>Delivery Men Contact : {parcel.deliveryManEmail?parcel.deliveryManEmail:'Not Assigned Yet'} </p>
                                 <p>Booking Status <span><button className='btn btn-sm bg-yellow-700 text-white'>{parcel.status}</button></span> <span><button className='btn btn-sm bg-yellow-500 text-white'>Review</button></span> </p>
                                 <div className="card-actions justify-start">
                                     <button className="btn btn-primary bg-green-600 text-white border-none">Pay</button>
