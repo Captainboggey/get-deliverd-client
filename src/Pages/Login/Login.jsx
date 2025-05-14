@@ -12,7 +12,7 @@ const Login = () => {
     const [error,setError]=useState('')
     const navigate = useNavigate()
     const location = useLocation();
-    console.log(location)
+    // console.log(location)
     const goTo =location?.state?.from?.pathname || '/'
     const onSubmit = data => {
         signIn(data.email, data.password)

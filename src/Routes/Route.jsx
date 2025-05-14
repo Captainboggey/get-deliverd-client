@@ -13,6 +13,8 @@ import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
 import AllDeliveryMan from "../Pages/Dashboard/AllDeliveryMan/AllDeliveryMan";
 
 import MyDelivery from "../Pages/Dashboard/MyDelivery/MyDelivery";
+import AdminRoute from "./AdminRoute";
+import Payment from "../Pages/Payment/Payment";
 
 const router =createBrowserRouter([{
     path:'/',
@@ -41,18 +43,22 @@ const router =createBrowserRouter([{
     },{
         path: '/dashboard/myProfile',
         element:<MyProfile></MyProfile>
+    },{
+        path: '/dashboard/payment/:id',
+        element:<Payment></Payment>,
+        loader:({params})=>fetch(`http://localhost:5000/parcel/payment/${params.id}`)
     },
     // admin
     {
         path: '/dashboard/allParcels',
-        element:<AllParcels></AllParcels>
+        element:<AdminRoute><AllParcels></AllParcels></AdminRoute>
 
     },{
         path: '/dashboard/allUsers',
-        element:<AllUsers></AllUsers>
+        element:<AdminRoute><AllUsers></AllUsers></AdminRoute>
     },{
         path: '/dashboard/allDeliveryMan',
-        element:<AllDeliveryMan></AllDeliveryMan>
+        element:<AdminRoute><AllDeliveryMan></AllDeliveryMan></AdminRoute>
     },
     // delivery Man
     {

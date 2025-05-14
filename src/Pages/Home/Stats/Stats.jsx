@@ -1,13 +1,24 @@
 
+import { useQuery } from '@tanstack/react-query';
 import CountUp from 'react-countup';
+import useAxiosPublic from '../../../Hooks/useAxiosPublic';
 const Stats = () => {
+    const axiosPublic =useAxiosPublic()
+    const {data: count={}}=useQuery({
+        queryKey:['count'],
+        queryFn:async()=>{
+            const result = await axiosPublic.get('/delivery/count')
+            return result.data
+        }
+    })
+    // console.log(count)
     return (
         <div>
 
             <div className='text-center my-20'>
 
                 <div className="stats shadow max-w-4xl">
-                    <CountUp start={0} end={100} delay={3}>
+                    <CountUp start={0} end={count.parcelCount} delay={5}>
                         {({ countUpRef, start }) => (
                             <div className="stat place-items-center">
                                 <div className="stat-title">Parcels Booked</div>
@@ -16,7 +27,7 @@ const Stats = () => {
                             </div>
                         )}
                     </CountUp>
-                    <CountUp start={0} end={100} delay={3}>
+                    <CountUp start={0} end={count.deliveryCount} delay={3}>
                         {({ countUpRef, start }) => (
                             <div className="stat place-items-center">
                                 <div className="stat-title">Parcels Delivered</div>
@@ -25,7 +36,7 @@ const Stats = () => {
                             </div>
                         )}
                     </CountUp>
-                    <CountUp start={0} end={100} delay={3}>
+                    <CountUp start={0} end={count.userCount} delay={3}>
                         {({ countUpRef, start }) => (
                             <div className="stat place-items-center">
                                 <div className="stat-title">Registered Users</div>

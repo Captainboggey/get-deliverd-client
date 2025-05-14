@@ -3,17 +3,46 @@ import { Helmet } from 'react-helmet-async';
 import useAuth from '../../../Hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
+import Swal from 'sweetalert2';
 
 const MyDelivery = () => {
     const { user } = useAuth()
     const axiosSecure = useAxiosSecure()
-    const { data: myDeliveries = [] } = useQuery({
+    const { data: myDeliveries = [], refetch } = useQuery({
         queryKey: ['myDeliveries', user?.email],
         queryFn: async () => {
             const result = await axiosSecure.get(`/delivery/collection/${user.email}`)
             return result.data
         }
     })
+    const handleDelivered = (parcelId, deliveryId) => {
+        axiosSecure.put(`/parcels/delivery/delivered/${parcelId}`)
+            .then(res => {
+                if (res.data.modifiedCount > 0) {
+                    axiosSecure.patch(`/delivery/collection/delivered/${deliveryId}`)
+                        .then(res => {
+                            if (res.data.modifiedCount > 0) {
+                                refetch()
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.onmouseenter = Swal.stopTimer;
+                                        toast.onmouseleave = Swal.resumeTimer;
+                                    }
+                                });
+                                Toast.fire({
+                                    icon: "success",
+                                    title: "Delivered"
+                                });
+                            }
+                        })
+                }
+            })
+    }
     return (
         <div>
             <Helmet>
@@ -39,20 +68,20 @@ const MyDelivery = () => {
                         </thead>
                         <tbody>
                             {/* row 1 */}
-                           
+
                             {
-                                myDeliveries.map((delivery,i)=> <tr key={delivery._id}>
-                                <th>{i+1}</th>
-                                <td>{delivery.senderName}</td>
-                                <td>{delivery.receiverName}</td>
-                                <td>{delivery.senderPhone}</td>
-                                <td>{delivery.approxDate}</td>
-                                <td>{delivery.receiverPhone}</td>
-                                <td><button className='btn'>Cancel</button></td>
-                                <td><button className='btn'>Delivered</button></td>
-                            </tr>)
+                                myDeliveries.map((delivery, i) => <tr key={delivery._id}>
+                                    <th>{i + 1}</th>
+                                    <td>{delivery.senderName}</td>
+                                    <td>{delivery.receiverName}</td>
+                                    <td>{delivery.senderPhone}</td>
+                                    <td>{delivery.approxDate}</td>
+                                    <td>{delivery.receiverPhone}</td>
+                                    <td><button className='btn'>Cancel</button></td>
+                                    <td>{delivery.deliveredStatus === 'true' ? 'Already Delivered' : <button onClick={() => handleDelivered(delivery.parcelId, delivery._id)} className='btn'>Delivered</button>}</td>
+                                </tr>)
                             }
-                          
+
                         </tbody>
                     </table>
                 </div>

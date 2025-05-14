@@ -8,6 +8,7 @@ import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../../../Hooks/useAxiosSecure';
+import { Link } from 'react-router-dom';
 
 const MyParcels = () => {
     const { user } = useAuth()
@@ -172,7 +173,9 @@ const MyParcels = () => {
                                 <p>Delivery Men Contact : {parcel.deliveryManEmail?parcel.deliveryManEmail:'Not Assigned Yet'} </p>
                                 <p>Booking Status <span><button className='btn btn-sm bg-yellow-700 text-white'>{parcel.status}</button></span> <span><button className='btn btn-sm bg-yellow-500 text-white'>Review</button></span> </p>
                                 <div className="card-actions justify-start">
-                                    <button className="btn btn-primary bg-green-600 text-white border-none">Pay</button>
+                                    {
+                                        parcel.payment==='success'?<button disabled className="btn btn-primary bg-green-600 text-white border-none">Paid</button>:<Link to={`/dashboard/payment/${parcel._id}`}><button className="btn btn-primary bg-green-600 text-white border-none">Pay</button></Link>
+                                    }
                                 </div>
                             </div>
                         </div>

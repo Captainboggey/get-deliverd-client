@@ -98,7 +98,15 @@ const AllParcels = () => {
                                     <td>{parcel.price}</td>
                                     <td>{parcel.status}</td>
                                     <td><Popup
-                                        trigger={parcel.status === 'On The Way'?<p disabled className='btn '>Managed</p>:<button className="btn"> Manage </button>} modal>
+                                        trigger={
+                                            parcel.status ==='Delivered'&&<p disabled className='btn '>Managed</p>||
+                                            parcel.status === 'On The Way'
+                                            &&<p disabled className='btn '>Managed</p>
+                                       
+                                        || parcel.payment === 'success'
+                                        &&<button className="btn"> Manage </button>
+                                        || !parcel.payment && <button disabled className="btn"> Not Paid </button>
+                                        } modal>
                                         <div className="card bg-base-100 md::w-full  md:max-w-3xl mx-auto shrink-0 shadow-2xl">
                                             <p className='text-xl text-center font-bold my-5'>Assign Delivery Man</p>
                                             <form onSubmit={handleSubmit(onSubmit)} className="card-body grid grid-cols-1 md:grid-cols-2 gap-2 justify-center mx-auto">
